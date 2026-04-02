@@ -269,6 +269,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6d934506029bdf43b4c85ee9d980278, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraFollow
+  target: {fileID: 662114715}
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
@@ -368,7 +369,7 @@ GameObject:
   - component: {fileID: 662114719}
   m_Layer: 0
   m_Name: Player
-  m_TagString: player
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -580,8 +581,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StageBuilder
   blockPrefab: {fileID: 4403285305197557119, guid: 06c685e233f950b4396356a1cb3fe7b5, type: 3}
-  enemyPrefab: {fileID: 0}
-  itemPrefab: {fileID: 0}
+  enemyPrefab: {fileID: 68667137317023329, guid: e53a04556a46f1b4f946b705c66ab156, type: 3}
+  itemPrefab: {fileID: 6777385546892571612, guid: 0bc84641c330dd442aab9c4eaffa8354, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
