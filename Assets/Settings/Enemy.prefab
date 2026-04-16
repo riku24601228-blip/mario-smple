@@ -14,8 +14,8 @@ GameObject:
   - component: {fileID: 2934372822182064625}
   - component: {fileID: -6709352022400366955}
   m_Layer: 3
-  m_Name: gachagon_0_0
-  m_TagString: Undefined
+  m_Name: Enemy
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

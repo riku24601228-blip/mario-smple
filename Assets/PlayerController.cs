@@ -20,6 +20,8 @@ public class PlayerController : MonoBehaviour
 
     private bool isGrounded = false;
 
+    private float MaxJumpCount;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -91,9 +93,31 @@ public class PlayerController : MonoBehaviour
 
         if (transform.position.y < fallThreshold)
         {
-            Debug.Log("プレイヤーが落下しました");
-            transform.position = new Vector3(0, 1, 0);
-            rb.linearVelocity = Vector2.zero;
+            if (GameManager.Instance != null)
+            {
+                GameManager.Instance.GameOver();
+            }
+        }
+    }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            if (GameManager.Instance != null)
+            {
+                GameManager.Instance.GameOver();
+            }
+        }
+    }
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("Item"))
+        {
+            if (GameManager.Instance != null)
+            {
+                GameManager.Instance.CollectItem();
+            }
+            Destroy(other.gameObject);
         }
     }
 

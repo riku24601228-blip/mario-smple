@@ -103,7 +103,7 @@ public class GameManager : MonoBehaviour
     public void GameClear()
     {
         CurrentState = GameState.GameClear;
-        SceneManager.LoadScene("GameCliarScene");
+        SceneManager.LoadScene("GameClearScene");
     }
 
     public void CollectItem()
