@@ -1,6 +1,7 @@
 using UnityEditor.PackageManager.Requests;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
@@ -34,7 +35,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-
+        UpdateStateFromScene();
     }
 
     void Update()
@@ -54,12 +55,35 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void UpdateStateFromScene()
+    {
+        string sceneName = SceneManager.GetActiveScene().name;
+
+        switch (sceneName)
+        {
+            case "TitleScene":
+                CurrentState = GameState.Title;
+                break;
+
+            case "GameScene":
+                CurrentState = GameState.Playing;
+                break;
+
+            case "GameOverScene":
+                CurrentState = GameState.GameOver;
+                break;
+
+            case "GameClearScene":
+                CurrentState = GameState.GameClear;
+                break;
+        }
+    }
 
     public void StartGame()
     {
         itemCount = 0;
         CurrentState = GameState.Playing;
-
+        SceneManager.LoadScene("GameScene");
     }
 
 
@@ -67,19 +91,19 @@ public class GameManager : MonoBehaviour
     {
         itemCount = 0;
         CurrentState = GameState.Title;
-
+        SceneManager.LoadScene("TitleScene");
     }
 
     public void GameOver()
     {
         CurrentState = GameState.GameOver;
-
+        SceneManager.LoadScene("GameOverScene");
     }
 
     public void GameClear()
     {
         CurrentState = GameState.GameClear;
-
+        SceneManager.LoadScene("GameCliarScene");
     }
 
     public void CollectItem()
