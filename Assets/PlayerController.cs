@@ -20,7 +20,11 @@ public class PlayerController : MonoBehaviour
 
     private bool isGrounded = false;
 
-    private float MaxJumpCount;
+    private float stompBounceForce = 8f;
+
+    private int maxJumpCount = 2;
+
+    private int currentJumpCount = 0;
 
     void Start()
     {
@@ -43,6 +47,7 @@ public class PlayerController : MonoBehaviour
 
     private void CheckGround()
     {
+        bool wasGrounded = isGrounded;
         if (groundCheck != null)
         {
             isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
@@ -54,6 +59,10 @@ public class PlayerController : MonoBehaviour
                 groundCheckRadius,
                 groundLayer
             );
+        }
+        if (!wasGrounded && isGrounded)
+        {
+            currentJumpCount = 0;
         }
     }
     private void HandleMovement()
@@ -83,9 +92,10 @@ public class PlayerController : MonoBehaviour
     {
         if (Keyboard.current != null &&
             Keyboard.current.upArrowKey.wasPressedThisFrame &&
-            isGrounded)
+            currentJumpCount < maxJumpCount)
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+            currentJumpCount++;
         }
     }
     private void CheckFall()
@@ -103,9 +113,28 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            if (GameManager.Instance != null)
+            float playerBottom = transform.position.y - GetComponent<BoxCollider2D>().bounds.extents.y;
+            float enemyCenter = collision.transform.position.y;
+
+            if (playerBottom > enemyCenter)
             {
-                GameManager.Instance.GameOver();
+
+                EnemyController enemy =
+                    collision.gameObject.GetComponent<EnemyController>();
+                if (enemy != null)
+                {
+                    enemy.OnStomped();
+                }
+
+                rb.linearVelocity = new Vector2(
+                    rb.linearVelocity.x, stompBounceForce);
+            }
+            else
+            {
+                if (GameManager.Instance != null)
+                {
+                    GameManager.Instance.GameOver();
+                }
             }
         }
     }
