@@ -1,4 +1,5 @@
 using System;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 
 public class StageBuilder : MonoBehaviour
@@ -9,13 +10,15 @@ public class StageBuilder : MonoBehaviour
 
     public GameObject itemPrefab;
 
+    public GameObject movingPlatformPrefab;
+
     private float blockSize = 1.0f;
     private Vector2 stageOffset = new Vector2(-3f, -3f);
     private int[,] stageData = new int[,]
     {
 
-        { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1},
-        { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1},
+        { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+        { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 4, 0, 0, 4, 0, 0, 1},
         { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
         { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
         { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -116,6 +119,21 @@ public class StageBuilder : MonoBehaviour
                     case 3:
                         Gizmos.color = Color.yellow;
                         Gizmos.DrawWireSphere(position, blockSize * 0.3f);
+                        break;
+                    case 4:
+                        if (movingPlatformPrefab != null)
+                        {
+                            GameObject platform = Instantiate(
+                            movingPlatformPrefab,
+                            position,
+                            Quaternion.identity,
+                            stageParent
+                            );
+                            if (platform.GetComponent<MovingPlatform>() == null)
+                            {
+                                platform.AddComponent<MovingPlatform>();
+                            }
+                        }
                         break;
                 }
             }

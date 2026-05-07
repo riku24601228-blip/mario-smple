@@ -625,6 +625,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2007692526}
   - component: {fileID: 2007692527}
+  - component: {fileID: 2007692528}
   m_Layer: 0
   m_Name: StageBuilder
   m_TagString: Untagged
@@ -662,6 +663,19 @@ MonoBehaviour:
   blockPrefab: {fileID: 4403285305197557119, guid: 06c685e233f950b4396356a1cb3fe7b5, type: 3}
   enemyPrefab: {fileID: 68667137317023329, guid: e53a04556a46f1b4f946b705c66ab156, type: 3}
   itemPrefab: {fileID: 6777385546892571612, guid: 0bc84641c330dd442aab9c4eaffa8354, type: 3}
+  movingPlatformPrefab: {fileID: 2392856883105687671, guid: 636f952720801d94a9b110e414e89494, type: 3}
+--- !u!114 &2007692528
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2007692524}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11514313a8544504db244f5cedf1ebfe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MovingPlatform
 --- !u!1 &2084058639
 GameObject:
   m_ObjectHideFlags: 0
