@@ -4,7 +4,6 @@ public class SoundManager : MonoBehaviour
 {
     public static SoundManager Instance { get; private set; }
 
-
     public AudioClip bgmTitle;
     public AudioClip bgmGame;
     public AudioClip seJump;

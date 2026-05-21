@@ -937,7 +937,7 @@ MonoBehaviour:
   blockPrefab: {fileID: 4403285305197557119, guid: 06c685e233f950b4396356a1cb3fe7b5, type: 3}
   enemyPrefab: {fileID: 68667137317023329, guid: e53a04556a46f1b4f946b705c66ab156, type: 3}
   itemPrefab: {fileID: 6777385546892571612, guid: 0bc84641c330dd442aab9c4eaffa8354, type: 3}
-  movingPlatformPrefab: {fileID: 2247768580176116073, guid: 3a9581067f52fb8439a8cfeab1039367, type: 3}
+  movingPlatformPrefab: {fileID: 6561239408735006862, guid: 3a9581067f52fb8439a8cfeab1039367, type: 3}
 --- !u!114 &2007692528
 MonoBehaviour:
   m_ObjectHideFlags: 0
