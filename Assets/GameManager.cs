@@ -2,10 +2,17 @@ using UnityEditor.PackageManager.Requests;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using UnityEngine.SocialPlatforms.Impl;
+using UnityEngine.UIElements;
 public class GameManager : MonoBehaviour
 {
+    private int scorePerItem = 100;
+    private int scorePerStomp = 200;
+    private int timeBonus = 10;
+    private float timeLimit = 60f;
+    private int score = 0;
+    private float remainingTime;
     public static GameManager Instance { get; private set; }
-
     public enum GameState
     {
         Title,
@@ -40,6 +47,16 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
+        if (CurrentState == GameState.Playing)
+        {
+            remainingTime -= Time.deltaTime;
+            if (remainingTime <= 0f)
+            {
+                remainingTime = 0f;
+                GameOver();
+                return;
+            }
+        }
         if (Keyboard.current != null && Keyboard.current.spaceKey.wasPressedThisFrame)
         {
             switch (CurrentState)
@@ -77,12 +94,25 @@ public class GameManager : MonoBehaviour
                 CurrentState = GameState.GameClear;
                 break;
         }
+        if (sceneName == "TitleScene" &&
+        SoundManager.Instance != null)
+        {
+            SoundManager.Instance.PlayBGM("title");
+        }
     }
 
     public void StartGame()
     {
         itemCount = 0;
+        score = 0;
+        remainingTime = timeLimit;
         CurrentState = GameState.Playing;
+        SceneManager.LoadScene("GameScene");
+        if (SoundManager.Instance != null)
+        {
+            SoundManager.Instance.PlayBGM("game");
+        }
+
         SceneManager.LoadScene("GameScene");
     }
 
@@ -98,18 +128,44 @@ public class GameManager : MonoBehaviour
     {
         CurrentState = GameState.GameOver;
         SceneManager.LoadScene("GameOverScene");
+        if (SoundManager.Instance != null)
+        {
+            SoundManager.Instance.StopBGM();
+            SoundManager.Instance.PlaySE("gameover");
+        }
+
+        SceneManager.LoadScene("GameOverScene");
     }
 
     public void GameClear()
     {
         CurrentState = GameState.GameClear;
         SceneManager.LoadScene("GameClearScene");
+        if (SoundManager.Instance != null)
+        {
+            SoundManager.Instance.StopBGM();
+            SoundManager.Instance.PlaySE("clear");
+        }
+
+        SceneManager.LoadScene("GameClearScene");
     }
 
     public void CollectItem()
     {
         itemCount++;
-        Debug.Log("アイテム取得: " + itemCount + " / " + requiredItemCount);
+        score += scorePerItem;
+        Debug.Log("スコア" + score + "アイテム取得: " + itemCount + " / " + requiredItemCount);
+
+        if (itemCount >= requiredItemCount)
+        {
+            int bonus = Mathf.CeilToInt(remainingTime) * timeBonus;
+            score += bonus;
+            GameClear();
+        }
+        if (SoundManager.Instance != null)
+        {
+            SoundManager.Instance.PlaySE("item");
+        }
 
         if (itemCount >= requiredItemCount)
         {
@@ -125,5 +181,17 @@ public class GameManager : MonoBehaviour
     public int GetRequiredItemCount()
     {
         return requiredItemCount;
+    }
+    public void AddScore(int points)
+    {
+        score += points;
+    }
+    public int GetScore()
+    {
+        return score;
+    }
+    public float GetRemainingTime()
+    {
+        return remainingTime;
     }
 }

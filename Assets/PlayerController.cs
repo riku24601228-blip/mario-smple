@@ -96,6 +96,10 @@ public class PlayerController : MonoBehaviour
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
             currentJumpCount++;
+            if (SoundManager.Instance != null)
+            {
+                SoundManager.Instance.PlaySE("jump");
+            }
         }
     }
     private void CheckFall()

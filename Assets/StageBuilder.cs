@@ -62,6 +62,21 @@ public class StageBuilder : MonoBehaviour
                     case 3:
                         SpawnObject(itemPrefab, position, "Items");
                         break;
+                    case 4:
+                        if (movingPlatformPrefab != null)
+                        {
+                            GameObject platform = Instantiate(
+                            movingPlatformPrefab,
+                            position,
+                            Quaternion.identity,
+                            transform
+                            );
+                            if (platform.GetComponent<MovingPlatform>() == null)
+                            {
+                                platform.AddComponent<MovingPlatform>();
+                            }
+                        }
+                        break;
                 }
             }
         }
@@ -120,21 +135,7 @@ public class StageBuilder : MonoBehaviour
                         Gizmos.color = Color.yellow;
                         Gizmos.DrawWireSphere(position, blockSize * 0.3f);
                         break;
-                    case 4:
-                        if (movingPlatformPrefab != null)
-                        {
-                            GameObject platform = Instantiate(
-                            movingPlatformPrefab,
-                            position,
-                            Quaternion.identity,
-                            stageParent
-                            );
-                            if (platform.GetComponent<MovingPlatform>() == null)
-                            {
-                                platform.AddComponent<MovingPlatform>();
-                            }
-                        }
-                        break;
+
                 }
             }
         }

@@ -1,8 +1,11 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 public class GameUI : MonoBehaviour
 {
     private TextMeshProUGUI itemCountText;
+    public TextMeshProUGUI scoreText;
+    public TextMeshProUGUI timerText;
 
     void Start()
     {
@@ -20,11 +23,37 @@ public class GameUI : MonoBehaviour
     }
     private void UpdateUI()
     {
-        if (itemCountText != null && GameManager.Instance != null)
+        if (GameManager.Instance == null) return;
+
+        if (itemCountText != null)
         {
-            int current = GameManager.Instance.GetItemCount();
-            int required = GameManager.Instance.GetRequiredItemCount();
-            itemCountText.text = "ITEMS: " + current + " / " + required;
+            itemCountText.text = "ITEMS: " +
+                GameManager.Instance.GetItemCount() + " / " +
+                GameManager.Instance.GetRequiredItemCount();
+        }
+
+        if (scoreText != null)
+        {
+            scoreText.text = "SCORE: " +
+                GameManager.Instance.GetScore();
+        }
+
+        if (timerText != null)
+        {
+
+            int timeInt = Mathf.CeilToInt(
+                GameManager.Instance.GetRemainingTime());
+            timerText.text = "TIME: " + timeInt;
+
+
+            if (timeInt <= 10)
+            {
+                timerText.color = Color.red;
+            }
+            else
+            {
+                timerText.color = Color.white;
+            }
         }
     }
 }
